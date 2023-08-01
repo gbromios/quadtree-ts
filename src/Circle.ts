@@ -1,4 +1,7 @@
-import type { NodeGeometry, Indexable, Quadrant } from './types'
+import { vec2 } from 'gl-matrix';
+import { NodeGeometry } from './NodeGeometry';
+import { RectangleGeometry } from './Rectangle';
+import { Indexable, QUAD, Quadrant } from './types'
 
 /**
  * Circle Geometry
@@ -22,6 +25,8 @@ export interface CircleGeometry {
      * Radius of the circle.
      */
     r: number
+
+    readonly center: vec2;
 }
 
 /**
@@ -29,7 +34,7 @@ export interface CircleGeometry {
  * @beta
  * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
  */
-export interface CircleProps<CustomDataType = void> extends CircleGeometry {
+export interface CircleProps<CustomDataType = void> extends Omit<CircleGeometry, 'center'> {
     /**
      * Whether this circle should be removed during a typical .clear call
      */
@@ -175,15 +180,7 @@ export interface CircleProps<CustomDataType = void> extends CircleGeometry {
 export class Circle<CustomDataType = void>
     implements CircleGeometry, Indexable
 {
-    /**
-     * X center of the circle.
-     */
-    x: number
-
-    /**
-     * Y center of the circle.
-     */
-    y: number
+    readonly center: vec2;
 
     /**
      * Radius of the circle.
@@ -206,50 +203,41 @@ export class Circle<CustomDataType = void>
      * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
      */
     constructor(props: CircleProps<CustomDataType>) {
-        this.x = props.x
-        this.y = props.y
+        this.center = vec2.fromValues(props.x, props.y);
         this.r = props.r
         this.qtStatic = props.qtStatic
         this.data = props.data
     }
+
+    get x (): number { return this.center[0]; }
+    set x (x: number) { this.center[0] = x; }
+
+    /**
+     * Y start of the rectangle (top left).
+     */
+    get y (): number { return this.center[1]; }
+    set y (y: number) { this.center[1] = y; }
+
+
 
     /**
      * Determine which quadrant this circle belongs to.
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node: NodeGeometry): Quadrant[] {
-        const indexes: Quadrant[] = [],
-            w2 = node.width / 2,
-            h2 = node.height / 2,
-            x2 = node.x + w2,
-            y2 = node.y + h2
+    * qtIndex(node: NodeGeometry): Generator<Quadrant> {
+        const sub = NodeGeometry(node.position, node.size);
+        vec2.scale(sub.size, sub.size, 0.5);
+        if (this.intersectRect(sub)) yield QUAD.NW;
 
-        //an array of node origins where the array index equals the node index
-        const nodes = [
-            [x2, node.y],
-            [node.x, node.y],
-            [node.x, y2],
-            [x2, y2],
-        ]
+        sub.position[0] += sub.size[0];
+        if (this.intersectRect(sub)) yield QUAD.NE;
 
-        //test all nodes for circle intersections
-        for (let i = 0; i < nodes.length; i++) {
-            if (
-                Circle.intersectRect(
-                    this.x,
-                    this.y,
-                    this.r,
-                    nodes[i][0],
-                    nodes[i][1],
-                    nodes[i][0] + w2,
-                    nodes[i][1] + h2
-                )
-            ) {
-                indexes.push(i)
-            }
-        }
-        return indexes
+        sub.position[1] += sub.size[1];
+        if (this.intersectRect(sub)) yield QUAD.SE;
+
+        sub.position[0] -= sub.size[0];
+        if (this.intersectRect(sub)) yield QUAD.SW;
     }
 
     /**
@@ -290,8 +278,26 @@ export class Circle<CustomDataType = void>
         maxX: number,
         maxY: number
     ): boolean {
-        const deltaX = x - Math.max(minX, Math.min(x, maxX))
-        const deltaY = y - Math.max(minY, Math.min(y, maxY))
-        return deltaX * deltaX + deltaY * deltaY < r * r
+        const dx = x - Math.max(minX, Math.min(x, maxX))
+        const dy = y - Math.max(minY, Math.min(y, maxY))
+        return dx * dx + dy * dy < r * r
     }
+
+    intersectRect (rectangle: RectangleGeometry): boolean;
+    intersectRect (position: vec2, size: vec2): boolean;
+    intersectRect (pr: RectangleGeometry|vec2, s?: vec2) {
+      // seems shady but... the signature saves us
+      if (!s) ({ position: pr, size: s } = pr as RectangleGeometry);
+      return Circle.intersectRect(
+        this.center[0],
+        this.center[1],
+        this.r,
+        (pr as vec2)[0],
+        (pr as vec2)[1],
+        (pr as vec2)[0] + s[0],
+        (pr as vec2)[1] + s[1],
+      );
+    }
+
+ 
 }

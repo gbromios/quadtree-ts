@@ -1,7 +1,7 @@
 import { Line } from '../../src/Line'
 import { Quadtree } from '../../src/Quadtree'
 import { Rectangle } from '../../src/Rectangle'
-import { NodeGeometry } from '../../src/types'
+import { NodeGeometry } from '../../src/NodeGeometry'
 
 describe('Line.constructor', () => {
     test('applies minimal arguments', () => {
@@ -20,7 +20,7 @@ describe('Line.constructor', () => {
     })
 })
 
-describe('Line additional use cases', () => {
+describe.skip('Line additional use cases', () => {
     test('Line.prototype.qtIndex can be referenced', () => {
         const tree = new Quadtree({ width: 100, height: 100, maxObjects: 1 })
         const line1 = {

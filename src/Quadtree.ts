@@ -1,7 +1,8 @@
-import type { NodeGeometry, Indexable, ObjectsType, Quadrant } from './types'
+import type { Indexable, ObjectsType, Quadrant } from './types'
 import type { Rectangle } from './Rectangle'
 import type { Circle } from './Circle'
 import type { Line } from './Line'
+import { NodeGeometry } from './NodeGeometry';
 import { Subtree } from './Subtree'
 
 const DEFAULT_MAX_OBJECTS = 10
@@ -130,12 +131,7 @@ export class Quadtree<T extends ObjectsType> {
      */
 
     constructor(props: QuadtreeProps, level = 0) {
-        this.bounds = {
-            x: props.x ?? 0,
-            y: props.y ?? 0,
-            width: props.width,
-            height: props.height,
-        }
+        this.bounds = NodeGeometry(props);
         this.maxObjects = props.maxObjects ?? DEFAULT_MAX_OBJECTS
         if (this.maxObjects < 1) throw new Error('maxObjects must be > 0')
         this.minObjects = props.minObjects ?? Math.floor(this.maxObjects / 2)
@@ -287,7 +283,7 @@ export class Quadtree<T extends ObjectsType> {
      * console.log(tree); // tree.objects and tree.nodes are empty
      * ```
      */
-    clear(force = false): void {
+    clear(force: boolean = false): void {
         if (force) {
             this.objects = []
             this.nodes = null
@@ -383,10 +379,13 @@ export class Quadtree<T extends ObjectsType> {
     *values(predicate?: (o: T) => boolean, dedupe?: boolean): Generator<T> {
         if (this.objects) {
             // given a set of objects to check for duplicate membership
-            if (predicate)
-                for (const o of this.objects)
+            if (predicate) {
+                for (const o of this.objects) {
                     if (predicate(o)) yield o
-                    else for (const o of this.objects) yield o
+                }
+            } else {
+              for (const o of this.objects) yield o;
+            }
         } else if (this.nodes) {
             if (!predicate || dedupe) predicate = this._makePredicate(predicate)
             for (const node of this.nodes) {
@@ -400,6 +399,6 @@ export class Quadtree<T extends ObjectsType> {
      * Just a convenient way to call .value with no arguments.
      */
     [Symbol.iterator](): Generator<T> {
-        return this.values()
+        return this.values(this._makePredicate())
     }
 }

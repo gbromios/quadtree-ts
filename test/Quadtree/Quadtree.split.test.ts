@@ -56,25 +56,25 @@ describe('Quadtree.split', () => {
     test('subnodes are arranged and scaled correctly', () => {
         const tree = new Quadtree({ width: 100, height: 100 })
         tree.split()
-        expect(tree.nodes?.[0].bounds).toEqual({
+        expect(tree.nodes?.[0].bounds).toMatchObject({
             x: 50,
             y: 0,
             width: 50,
             height: 50,
         })
-        expect(tree.nodes?.[1].bounds).toEqual({
+        expect(tree.nodes?.[1].bounds).toMatchObject({
             x: 0,
             y: 0,
             width: 50,
             height: 50,
         })
-        expect(tree.nodes?.[2].bounds).toEqual({
+        expect(tree.nodes?.[2].bounds).toMatchObject({
             x: 0,
             y: 50,
             width: 50,
             height: 50,
         })
-        expect(tree.nodes?.[3].bounds).toEqual({
+        expect(tree.nodes?.[3].bounds).toMatchObject({
             x: 50,
             y: 50,
             width: 50,
@@ -85,25 +85,25 @@ describe('Quadtree.split', () => {
     test('subnodes are arranged and scaled correctly (floats)', () => {
         const tree = new Quadtree({ width: 99, height: 99 })
         tree.split()
-        expect(tree.nodes?.[0].bounds).toEqual({
+        expect(tree.nodes?.[0].bounds).toMatchObject({
             x: 49.5,
             y: 0,
             width: 49.5,
             height: 49.5,
         })
-        expect(tree.nodes?.[1].bounds).toEqual({
+        expect(tree.nodes?.[1].bounds).toMatchObject({
             x: 0,
             y: 0,
             width: 49.5,
             height: 49.5,
         })
-        expect(tree.nodes?.[2].bounds).toEqual({
+        expect(tree.nodes?.[2].bounds).toMatchObject({
             x: 0,
             y: 49.5,
             width: 49.5,
             height: 49.5,
         })
-        expect(tree.nodes?.[3].bounds).toEqual({
+        expect(tree.nodes?.[3].bounds).toMatchObject({
             x: 49.5,
             y: 49.5,
             width: 49.5,

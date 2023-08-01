@@ -1,4 +1,7 @@
-import type { NodeGeometry, Indexable, Quadrant } from './types'
+import type { Indexable, Quadrant } from './types'
+
+import { vec2 } from "gl-matrix";
+import { NodeGeometry } from './NodeGeometry';
 import { QUAD } from './types'
 
 /**
@@ -28,6 +31,18 @@ export interface RectangleGeometry {
      * Height of the rectangle.
      */
     height: number
+
+    /**
+     * X,Y position vector of the node
+     */
+    readonly position: vec2;
+
+    /**
+     * Width, Height size vector of the node
+     */
+    readonly size: vec2;
+
+
 }
 
 /**
@@ -36,7 +51,7 @@ export interface RectangleGeometry {
  * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
  */
 export interface RectangleProps<CustomDataType = void>
-    extends RectangleGeometry {
+    extends Omit<RectangleGeometry, 'position'|'size'> {
     /**
      * Whether this rectangle should be removed during a typical .clear call
      */
@@ -191,78 +206,89 @@ export class Rectangle<CustomDataType = void>
     implements RectangleGeometry, Indexable
 {
     /**
-     * X start of the rectangle (top left).
-     */
-    x: number
-
-    /**
-     * Y start of the rectangle (top left).
-     */
-    y: number
-
-    /**
-     * Width of the rectangle.
-     */
-    width: number
-
-    /**
-     * Height of the rectangle.
-     */
-    height: number
-
-    /**
      * Whether this rectangle should be removed during a typical .clear call
      */
-    qtStatic?: boolean
+    qtStatic: boolean
 
     /**
      * Custom data.
      */
     data?: CustomDataType
 
+    /**
+     * X,Y position vector of the node
+     */
+    readonly position: vec2;
+
+    /**
+     * Width, Height size vector of the node
+     */
+    readonly size: vec2;
+
+    private readonly buffer: ArrayBuffer;
+
     constructor(props: RectangleProps<CustomDataType>) {
-        this.x = props.x
-        this.y = props.y
-        this.width = props.width
-        this.height = props.height
-        this.qtStatic = props.qtStatic
-        this.data = props.data
+        this.buffer = new ArrayBuffer(4 * Float32Array.BYTES_PER_ELEMENT);
+        this.position = new Float32Array(this.buffer, 0, 2) as vec2;
+        this.size = new Float32Array(this.buffer, 8, 2) as vec2;
+        this.position[0] = props.x ?? 0;
+        this.position[1] = props.y ?? 0;
+        this.size[0] = props.width;
+        this.size[1] = props.height;
+        this.qtStatic = props.qtStatic ?? false;
+        if (props.data != null) this.data = props.data
     }
+
+    /**
+     * X start of the rectangle (top left).
+     */
+    get x (): number { return this.position[0]; }
+    set x (x: number) { this.position[0] = x; }
+
+    /**
+     * Y start of the rectangle (top left).
+     */
+    get y (): number { return this.position[1]; }
+    set y (y: number) { this.position[1] = y; }
+
+    /**
+     * Width of the rectangle.
+     */
+    get width (): number { return this.size[0]; }
+    set width (width: number) { this.size[0] = width; }
+
+    /**
+     * Height of the rectangle.
+     */
+    get height (): number { return this.size[1]; }
+    set height (height: number) { this.size[1] = height; }
+
+    // xStart,yStart, xEnd, yEnd
+    /*
+    * [Symbol.iterator] (): Generator {
+      yield this.position[0];
+      yield this.position[1];
+      yield this.size[0] + this.position[0];
+      yield this.size[1] + this.position[1];
+    }
+    */
 
     /**
      * Determine which quadrant this rectangle belongs to.
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node: NodeGeometry): Quadrant[] {
-        const indexes: Quadrant[] = [],
-            boundsCenterX = node.x + node.width / 2,
-            boundsCenterY = node.y + node.height / 2
+    * qtIndex(node: NodeGeometry): Generator<Quadrant> {
+        const center = node.center();
+        const startIsWest = this.position[0] < center[0];
+        const startIsNorth = this.position[1] < center[1];
+        const end = vec2.add(vec2.create(), this.size, this.position);
+        const endIsEast = end[0] > center[0];
+        const endIsSouth = end[1] > center[1];
 
-        const startIsNorth = this.y < boundsCenterY,
-            startIsWest = this.x < boundsCenterX,
-            endIsEast = this.x + this.width > boundsCenterX,
-            endIsSouth = this.y + this.height > boundsCenterY
-
-        //top-right quad
-        if (startIsNorth && endIsEast) {
-            indexes.push(QUAD.NE)
-        }
-
-        //top-left quad
-        if (startIsWest && startIsNorth) {
-            indexes.push(QUAD.NW)
-        }
-
-        //bottom-left quad
-        if (startIsWest && endIsSouth) {
-            indexes.push(QUAD.SW)
-        }
-
-        //bottom-right quad
-        if (endIsEast && endIsSouth) {
-            indexes.push(QUAD.SE)
-        }
-        return indexes
+        if (startIsNorth && endIsEast) yield QUAD.NE;
+        if (startIsWest && startIsNorth) yield QUAD.NW;
+        if (startIsWest && endIsSouth) yield QUAD.SW;
+        if (endIsEast && endIsSouth) yield QUAD.SE;
     }
 }

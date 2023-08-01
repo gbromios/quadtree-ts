@@ -1,4 +1,7 @@
-import type { NodeGeometry, Indexable } from './types'
+import { vec2 } from 'gl-matrix';
+import { NodeGeometry } from './NodeGeometry';
+import type { Rectangle, RectangleGeometry } from './Rectangle';
+import { Indexable, QUAD, Quadrant } from './types'
 
 /**
  * Line Geometry
@@ -27,6 +30,7 @@ export interface LineGeometry {
      * Y end of the line.
      */
     y2: number
+
 }
 
 /**
@@ -187,26 +191,6 @@ export interface LineProps<CustomDataType = void> extends LineGeometry {
  */
 export class Line<CustomDataType = void> implements LineGeometry, Indexable {
     /**
-     * X start of the line.
-     */
-    x1: number
-
-    /**
-     * Y start of the line.
-     */
-    y1: number
-
-    /**
-     * X end of the line.
-     */
-    x2: number
-
-    /**
-     * Y end of the line.
-     */
-    y2: number
-
-    /**
      * Whether this circle should be removed during a typical .clear call
      */
     qtStatic?: boolean
@@ -217,59 +201,103 @@ export class Line<CustomDataType = void> implements LineGeometry, Indexable {
     data?: CustomDataType
 
     /**
+     * x,y vector for the start of the line
+     */
+    readonly a: vec2
+
+
+    /**
+     * x,y vector for the end of the line
+     */
+    readonly b: vec2
+
+    private readonly buffer: ArrayBuffer;
+
+    /**
      * Line Constructor
      * @param props - Line properties
      * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
      */
     constructor(props: LineProps<CustomDataType>) {
-        this.x1 = props.x1
-        this.y1 = props.y1
-        this.x2 = props.x2
-        this.y2 = props.y2
-        this.qtStatic = props.qtStatic
-        this.data = props.data
+        this.buffer = new ArrayBuffer(4 * Float32Array.BYTES_PER_ELEMENT);
+        this.a = new Float32Array(this.buffer, 0, 2) as vec2;
+        this.b = new Float32Array(this.buffer, 8, 2) as vec2;
+        this.a[0] = props.x1;
+        this.a[1] = props.y1;
+        this.b[0] = props.x2;
+        this.b[1] = props.y2;
+        this.qtStatic = props.qtStatic ?? false;
+        if (props.data != null) this.data = props.data
     }
+
+    toString(): string {
+      return `Line([${this.a[0]}, ${this.a[1]}] → [${this.b[0]}, ${this.b[1]}])`;
+    }
+    /**
+     * X start of the line.
+     */
+    get x1 (): number { return this.a[0]; }
+    set x1 (x1: number) { this.a[0] = x1; }
+
+    /**
+     * Y start of the line.
+     */
+    get y1 (): number { return this.a[1]; }
+    set y1 (y1: number) { this.a[1] = y1; }
+
+    /**
+     * X end of the line.
+     */
+    get x2 (): number { return this.b[0]; }
+    set x2 (x2: number) { this.b[0] = x2; }
+
+    /**
+     * Y end of the line.
+     */
+    get y2 (): number { return this.b[1]; }
+    set y2 (y2: number) { this.b[1] = y2; }
 
     /**
      * Determine which quadrant this line belongs to.
      * @beta
      * @param node - Quadtree node to be checked
-     * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
+     * @returns Generator of colliding quad indices
      */
-    qtIndex(node: NodeGeometry): number[] {
-        const indexes: number[] = [],
-            w2 = node.width / 2,
-            h2 = node.height / 2,
-            x2 = node.x + w2,
-            y2 = node.y + h2
+    * qtIndex(node: NodeGeometry): Generator<Quadrant> {
+        const sub = NodeGeometry(node.position, node.size);
+        vec2.scale(sub.size, sub.size, 0.5);
+        if (this.intersectRect(sub)) yield QUAD.NW;
+        sub.position[0] += sub.size[0];
+        if (this.intersectRect(sub)) yield QUAD.NE;
+        sub.position[1] += sub.size[1];
+        if (this.intersectRect(sub)) yield QUAD.SE;
+        sub.position[0] -= sub.size[0];
+        if (this.intersectRect(sub)) yield QUAD.SW;
+    }
 
-        //an array of node origins where the array index equals the node index
-        const nodes = [
-            [x2, node.y],
-            [node.x, node.y],
-            [node.x, y2],
-            [x2, y2],
-        ]
+    intersectRect (rectangle: RectangleGeometry): boolean;
+    intersectRect (position: vec2, size: vec2): boolean;
+    intersectRect (pr: RectangleGeometry|vec2, s?: vec2) {
+      // seems shady but... the signature saves us
+      if (!s) ({ position: pr, size: s } = pr as RectangleGeometry);
+      return Line.intersectRect(
+        this.a[0],
+        this.a[1],
+        this.b[0],
+        this.b[1],
+        (pr as vec2)[0],
+        (pr as vec2)[1],
+        (pr as vec2)[0] + s[0],
+        (pr as vec2)[1] + s[1],
+      );
+    }
 
-        //test all nodes for line intersections
-        for (let i = 0; i < nodes.length; i++) {
-            if (
-                Line.intersectRect(
-                    this.x1,
-                    this.y1,
-                    this.x2,
-                    this.y2,
-                    nodes[i][0],
-                    nodes[i][1],
-                    nodes[i][0] + w2,
-                    nodes[i][1] + h2
-                )
-            ) {
-                indexes.push(i)
-            }
-        }
-
-        return indexes
+    // x1, y1, x2, y2
+    * [Symbol.iterator] (): Generator<number> {
+      yield this.a[0];
+      yield this.a[1];
+      yield this.b[0];
+      yield this.b[1];
     }
 
     /**
