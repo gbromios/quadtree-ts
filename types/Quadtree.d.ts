@@ -1,7 +1,7 @@
-import type { NodeGeometry, Indexable } from './types';
-import type { Rectangle } from './Rectangle';
-import type { Circle } from './Circle';
-import type { Line } from './Line';
+import type { NodeGeometry, Indexable } from './types'
+import type { Rectangle } from './Rectangle'
+import type { Circle } from './Circle'
+import type { Line } from './Line'
 /**
  * Quadtree Constructor Properties
  */
@@ -9,31 +9,31 @@ export interface QuadtreeProps {
     /**
      * Width of the node.
      */
-    width: number;
+    width: number
     /**
      * Height of the node.
      */
-    height: number;
+    height: number
     /**
      * X Offset of the node.
      * @defaultValue `0`
      */
-    x?: number;
+    x?: number
     /**
      * Y Offset of the node.
      * @defaultValue `0`
      */
-    y?: number;
+    y?: number
     /**
      * Max objects this node can hold before it splits.
      * @defaultValue `10`
      */
-    maxObjects?: number;
+    maxObjects?: number
     /**
      * Total max nesting levels of the root Quadtree node.
      * @defaultValue `4`
      */
-    maxLevels?: number;
+    maxLevels?: number
 }
 /**
  * Class representing a Quadtree node.
@@ -61,48 +61,50 @@ export interface QuadtreeProps {
  * });
  * ```
  */
-export declare class Quadtree<ObjectsType extends Rectangle | Circle | Line | Indexable> {
+export declare class Quadtree<
+    ObjectsType extends Rectangle | Circle | Line | Indexable,
+> {
     /**
      * The numeric boundaries of this node.
      * @readonly
      */
-    bounds: NodeGeometry;
+    bounds: NodeGeometry
     /**
      * Max objects this node can hold before it splits.
      * @defaultValue `10`
      * @readonly
      */
-    maxObjects: number;
+    maxObjects: number
     /**
      * Total max nesting levels of the root Quadtree node.
      * @defaultValue `4`
      * @readonly
      */
-    maxLevels: number;
+    maxLevels: number
     /**
      * The level of this node.
      * @defaultValue `0`
      * @readonly
      */
-    level: number;
+    level: number
     /**
      * Array of objects in this node.
      * @defaultValue `[]`
      * @readonly
      */
-    objects: ObjectsType[];
+    objects: ObjectsType[]
     /**
      * Subnodes of this node
      * @defaultValue `[]`
      * @readonly
      */
-    nodes: Quadtree<ObjectsType>[];
+    nodes: Quadtree<ObjectsType>[]
     /**
      * Quadtree Constructor
      * @param props - bounds and properties of the node
      * @param level - depth level (internal use only, required for subnodes)
      */
-    constructor(props: QuadtreeProps, level?: number);
+    constructor(props: QuadtreeProps, level?: number)
     /**
      * Get the quadrant (subnode indexes) an object belongs to.
      *
@@ -117,7 +119,7 @@ export declare class Quadtree<ObjectsType extends Rectangle | Circle | Line | In
      * @param obj - object to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right).
      */
-    getIndex(obj: Rectangle | Circle | Line | Indexable): number[];
+    getIndex(obj: Rectangle | Circle | Line | Indexable): number[]
     /**
      * Split the node into 4 subnodes.
      * @internal
@@ -129,7 +131,7 @@ export declare class Quadtree<ObjectsType extends Rectangle | Circle | Line | In
      * console.log(tree); // now tree has four subnodes
      * ```
      */
-    split(): void;
+    split(): void
     /**
      * Insert an object into the node. If the node
      * exceeds the capacity, it will split and add all
@@ -145,7 +147,7 @@ export declare class Quadtree<ObjectsType extends Rectangle | Circle | Line | In
      *
      * @param obj - Object to be added.
      */
-    insert(obj: ObjectsType): void;
+    insert(obj: ObjectsType): void
     /**
      * Return all objects that could collide with the given geometry.
      *
@@ -159,7 +161,7 @@ export declare class Quadtree<ObjectsType extends Rectangle | Circle | Line | In
      * @param obj - geometry to be checked
      * @returns Array containing all detected objects.
      */
-    retrieve(obj: Rectangle | Circle | Line | Indexable): ObjectsType[];
+    retrieve(obj: Rectangle | Circle | Line | Indexable): ObjectsType[]
     /**
      * Clear the Quadtree.
      *
@@ -171,5 +173,5 @@ export declare class Quadtree<ObjectsType extends Rectangle | Circle | Line | In
      * console.log(tree); // tree.objects and tree.nodes are empty
      * ```
      */
-    clear(): void;
+    clear(): void
 }

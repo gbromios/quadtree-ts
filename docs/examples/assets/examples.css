@@ -32,7 +32,7 @@ p {
 }
 hr {
     margin: 0.5rem 0;
-    border: 0; 
+    border: 0;
     border-top: 1px solid #eee;
 }
 
@@ -59,10 +59,18 @@ canvas {
     background: black;
 }
 
-.m05 { margin-bottom: 0.5rem; }
-.m1 { margin-bottom: 1rem; }
-.m2 { margin-bottom: 2rem; }
-.m4 { margin-bottom: 4rem; }
+.m05 {
+    margin-bottom: 0.5rem;
+}
+.m1 {
+    margin-bottom: 1rem;
+}
+.m2 {
+    margin-bottom: 2rem;
+}
+.m4 {
+    margin-bottom: 4rem;
+}
 
 .canvas {
     position: relative;
@@ -78,11 +86,11 @@ canvas {
 }
 .panel h3 {
     font-size: 0.875rem;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
 }
 .panel h4 {
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     margin-bottom: 0.5rem;
 }
 .content {
@@ -142,13 +150,13 @@ canvas {
     display: inline-block;
     border: none;
     border-radius: 0.125rem;
-    background: rgba(32,32,32,0.2);
+    background: rgba(32, 32, 32, 0.2);
     padding: 0.25rem 0.5rem;
     transition: background-color 0.4s;
     cursor: pointer;
 }
 .button:hover {
-    background-color: rgba(32,32,32,0.1);
+    background-color: rgba(32, 32, 32, 0.1);
 }
 .button:active {
     color: black;
@@ -156,8 +164,6 @@ canvas {
 }
 
 /* TABS */
-
-
 
 .tabs {
     display: flex;
@@ -168,25 +174,25 @@ canvas {
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 0 0.25rem 0 0;
-    background: rgba(255,255,255,0.6);
+    background: rgba(255, 255, 255, 0.6);
     transition: background-color 0.4s;
 }
 .tab:hover {
-    background: rgba(255,255,255,0.8);
+    background: rgba(255, 255, 255, 0.8);
 }
 .tab.active {
     color: black;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255, 255, 255, 0.9);
 }
 .tabs--dark .tab {
-    background: rgba(32,32,32,0.1);
+    background: rgba(32, 32, 32, 0.1);
 }
 .tabs--dark .tab:hover {
-    background: rgba(32,32,32,0.2);
+    background: rgba(32, 32, 32, 0.2);
 }
 .tabs--dark .tab.active {
     color: white;
-    background: rgba(32,32,32,0.8);
+    background: rgba(32, 32, 32, 0.8);
 }
 
 .tab-content {
@@ -197,14 +203,14 @@ canvas {
     justify-content: space-between;
     align-items: stretch;
     color: black;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255, 255, 255, 0.9);
     font-size: 0.75rem;
     border-radius: 0 0 0 0.25rem;
 }
 
 .tabs--dark ~ .tab-content.active {
     color: white;
-    background: rgba(32,32,32,0.8);
+    background: rgba(32, 32, 32, 0.8);
 }
 
 .tab-code {
@@ -224,7 +230,7 @@ canvas {
     top: 50%;
     left: 100%;
     transform: translateY(-50%) translateX(0.5rem);
-    background: rgba(255,255,255,0.9);
+    background: rgba(255, 255, 255, 0.9);
     padding: 0.25rem 0.5rem;
     animation: copied 2s forwards cubic-bezier(0.68, -0.6, 0.32, 1.6);
 }
@@ -232,14 +238,17 @@ canvas {
 @keyframes copied {
     0% {
         opacity: 0;
-        transform: translateY(-50%) translateX(0.5rem) translateY(1rem) rotate(10deg);
+        transform: translateY(-50%) translateX(0.5rem) translateY(1rem)
+            rotate(10deg);
     }
-    30%, 70% {
+    30%,
+    70% {
         opacity: 1;
         transform: translateY(-50%) translateX(0.5rem);
     }
     100% {
         opacity: 0;
-        transform: translateY(-50%) translateX(0.5rem) translateY(-1rem) rotate(-5deg);
+        transform: translateY(-50%) translateX(0.5rem) translateY(-1rem)
+            rotate(-5deg);
     }
 }

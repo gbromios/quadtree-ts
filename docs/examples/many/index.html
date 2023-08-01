@@ -1,39 +1,51 @@
 <!doctype html>
 <html>
-	<head>
-		<title>quadtree-ts – many-to-many example</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Fira+Sans&display=swap" rel="stylesheet">
-        
+    <head>
+        <title>quadtree-ts – many-to-many example</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Fira+Sans&display=swap"
+            rel="stylesheet"
+        />
+
         <!-- prism syntax highlighting (https://prismjs.com/) -->
-		<link 
-            rel="stylesheet" 
-            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css" 
-            integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" 
-            crossorigin="anonymous" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css"
+            integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ=="
+            crossorigin="anonymous"
+        />
 
         <link rel="stylesheet" href="../assets/examples.css" />
-        
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-	</head>
-	<body>
 
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
         <div class="panel">
-
             <div>
                 <h2>quadtree-ts</h2>
                 <h3 class="m1">2.0.0-beta.2</h3>
-                
+
                 <nav class="m4">
                     <h4>Examples</h4>
                     <ul class="links">
                         <li><a class="link" href="../simple">Simple</a></li>
                         <li><a class="link" href="../dynamic">Dynamic</a></li>
                         <li><a class="link" href="../many">Many-to-many</a></li>
-                        <li><a class="link" href="../primitives">Primitives</a></li>
-                        <li><a class="link" href="../class-extension">Class Extension</a></li>
-                        <li><a class="link" href="../property-mapping">Property Mapping</a></li>
+                        <li>
+                            <a class="link" href="../primitives">Primitives</a>
+                        </li>
+                        <li>
+                            <a class="link" href="../class-extension"
+                                >Class Extension</a
+                            >
+                        </li>
+                        <li>
+                            <a class="link" href="../property-mapping"
+                                >Property Mapping</a
+                            >
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -43,29 +55,61 @@
                     <h4>Links</h4>
                     <ul class="links">
                         <li><a class="link" href="/quadtree-ts/">Home</a></li>
-                        <li><a class="link" href="https://github.com/timohausmann/quadtree-ts#readme">Readme</a></li>
-                        <li><a class="link" href="/documentation">API Docs</a></li>
-                        <li><a href="https://github.com/timohausmann/quadtree-ts" 
-                            title="quadtree-ts at GitHub"
-                            class="link icon"
-                            target="_blank" rel="noopener noreferrer">
-                            <img src="../assets/logo-github.svg" alt="GitHub Logo" />
-                            GitHub
-                        </a></li>
-                        <li><a href="https://www.npmjs.com/package/@timohausmann/quadtree-ts" 
-                            title="quadtree-ts at npm"
-                            class="link icon"
-                            target="_blank" rel="noopener noreferrer">
-                            <img src="../assets/logo-npm.svg" alt="npm Logo" />
-                            npm
-                        </a></li>
-                        <li><a href="https://twitter.com/timohausmann" 
-                            title="quadtree-ts author at Twitter"
-                            class="link icon"
-                            target="_blank" rel="noopener noreferrer">
-                            <img src="../assets/logo-twitter.svg" alt="Twitter Logo" />
-                            Twitter
-                        </a></li>
+                        <li>
+                            <a
+                                class="link"
+                                href="https://github.com/timohausmann/quadtree-ts#readme"
+                                >Readme</a
+                            >
+                        </li>
+                        <li>
+                            <a class="link" href="/documentation">API Docs</a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://github.com/timohausmann/quadtree-ts"
+                                title="quadtree-ts at GitHub"
+                                class="link icon"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src="../assets/logo-github.svg"
+                                    alt="GitHub Logo"
+                                />
+                                GitHub
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://www.npmjs.com/package/@timohausmann/quadtree-ts"
+                                title="quadtree-ts at npm"
+                                class="link icon"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src="../assets/logo-npm.svg"
+                                    alt="npm Logo"
+                                />
+                                npm
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://twitter.com/timohausmann"
+                                title="quadtree-ts author at Twitter"
+                                class="link icon"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src="../assets/logo-twitter.svg"
+                                    alt="Twitter Logo"
+                                />
+                                Twitter
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </footer>
@@ -76,14 +120,16 @@
             <div class="canvas m2">
                 <canvas id="canvas" width="640" height="480"></canvas>
 
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between">
                     <div>
                         <input type="checkbox" id="toggle-quadtree" checked />
                         <label for="toggle-quadtree">Use Quadtree</label>
                     </div>
 
                     <div>
-                        <label for="amount" style="margin-left: auto;">Object amount</label>
+                        <label for="amount" style="margin-left: auto"
+                            >Object amount</label
+                        >
                         <select id="amount">
                             <option>400</option>
                             <option>800</option>
@@ -97,29 +143,37 @@
             </div>
 
             <p class="m1">
-				This example shows how Quadtrees can be used for many-to-many checks. All objects can collide with each other. 
+                This example shows how Quadtrees can be used for many-to-many
+                checks. All objects can collide with each other.
             </p>
-            
-            <p class="m1">
-                Two loops are neccessary to first insert all objects into the tree <code>[2]</code> 
-                and then check each object for collisions <code>[3]</code>.
-			</p>
 
             <p class="m1">
-                &bull; If <em>Use Quadtree</em> is enabled, every objects is only checked against objects from the same node(s).<br />
-                &bull; If <em>Use Quadtree</em> is disabled, every object is checked against ever other object.
+                Two loops are neccessary to first insert all objects into the
+                tree <code>[2]</code> and then check each object for collisions
+                <code>[3]</code>.
+            </p>
+
+            <p class="m1">
+                &bull; If <em>Use Quadtree</em> is enabled, every objects is
+                only checked against objects from the same node(s).<br />
+                &bull; If <em>Use Quadtree</em> is disabled, every object is
+                checked against ever other object.
             </p>
             <p class="m2">
                 The following code is reduced to the most important parts.
-                <a href="https://github.com/timohausmann/quadtree-ts/docs/examples/many/" 
-                    target="_blank" rel="noopener noreferrer">View the full script.js of this example on GitHub</a>.
+                <a
+                    href="https://github.com/timohausmann/quadtree-ts/docs/examples/many/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >View the full script.js of this example on GitHub</a
+                >.
             </p>
 
             <h4>HTML</h4>
             <pre><code class="language-html">&lt;canvas id="canvas" width="640" height="480"&gt;&lt;/canvas&gt;</code></pre>
 
             <h4>JS</h4>
-			<pre><code class="language-javascript">// Create a new Quadtree
+            <pre><code class="language-javascript">// Create a new Quadtree
 const tree = new Quadtree({
 	width: 640,
 	height: 480,
@@ -216,27 +270,35 @@ loop();
 
 </code></pre>
 
-			<p>
-				To see the full example code please check the page source or 
-				<a href="https://github.com/timohausmann/quadtree-ts/docs/examples/many/" 
-                    target="_blank" rel="noopener noreferrer">visit this page on github</a>.
-			</p>
+            <p>
+                To see the full example code please check the page source or
+                <a
+                    href="https://github.com/timohausmann/quadtree-ts/docs/examples/many/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >visit this page on github</a
+                >.
+            </p>
         </main>
 
         <!-- prism syntax highlighting -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/prism.min.js" 
-            integrity="sha512-WkVkkoB31AoI9DAk6SEEEyacH9etQXKUov4JRRuM1Y681VsTq7jYgrRw06cbP6Io7kPsKx+tLFpH/HXZSZ2YEQ==" 
-            crossorigin="anonymous"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/prism.min.js"
+            integrity="sha512-WkVkkoB31AoI9DAk6SEEEyacH9etQXKUov4JRRuM1Y681VsTq7jYgrRw06cbP6Io7kPsKx+tLFpH/HXZSZ2YEQ=="
+            crossorigin="anonymous"
+        ></script>
 
         <!-- stats.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/17/Stats.js" 
-            integrity="sha512-PKGeQYRMLu1YBq2unBh8dSonpTsgd5MOJqggUn9S/MNywjMbo5F/PuBoYRdNYBjcOHrboHG2r2zlQQEfKikHSA==" 
-            crossorigin="anonymous" 
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/17/Stats.js"
+            integrity="sha512-PKGeQYRMLu1YBq2unBh8dSonpTsgd5MOJqggUn9S/MNywjMbo5F/PuBoYRdNYBjcOHrboHG2r2zlQQEfKikHSA=="
+            crossorigin="anonymous"
             type="module"
-            referrerpolicy="no-referrer"></script>
+            referrerpolicy="no-referrer"
+        ></script>
 
         <script src="https://cdn.jsdelivr.net/npm/@timohausmann/quadtree-ts/dist/quadtree.umd.full.js"></script>
         <script src="../assets/examples.js"></script>
         <script src="./script.js" type="module"></script>
-	</body>
+    </body>
 </html>

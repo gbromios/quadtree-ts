@@ -1,4 +1,4 @@
-import type { NodeGeometry, Indexable } from './types';
+import type { NodeGeometry, Indexable } from './types'
 /**
  * Circle Geometry
  * @beta
@@ -10,15 +10,15 @@ export interface CircleGeometry {
     /**
      * X center of the circle.
      */
-    x: number;
+    x: number
     /**
      * Y center of the circle.
      */
-    y: number;
+    y: number
     /**
      * Radius of the circle.
      */
-    r: number;
+    r: number
 }
 /**
  * Circle Constructor Properties
@@ -29,7 +29,7 @@ export interface CircleProps<CustomDataType = void> extends CircleGeometry {
     /**
      * Custom data
      */
-    data?: CustomDataType;
+    data?: CustomDataType
 }
 /**
  * Class representing a Circle.
@@ -162,35 +162,37 @@ export interface CircleProps<CustomDataType = void> extends CircleGeometry {
  * });
  * ```
  */
-export declare class Circle<CustomDataType = void> implements CircleGeometry, Indexable {
+export declare class Circle<CustomDataType = void>
+    implements CircleGeometry, Indexable
+{
     /**
      * X center of the circle.
      */
-    x: number;
+    x: number
     /**
      * Y center of the circle.
      */
-    y: number;
+    y: number
     /**
      * Radius of the circle.
      */
-    r: number;
+    r: number
     /**
      * Custom data.
      */
-    data?: CustomDataType;
+    data?: CustomDataType
     /**
      * Circle Constructor
      * @param props - Circle properties
      * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
      */
-    constructor(props: CircleProps<CustomDataType>);
+    constructor(props: CircleProps<CustomDataType>)
     /**
      * Determine which quadrant this circle belongs to.
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node: NodeGeometry): number[];
+    qtIndex(node: NodeGeometry): number[]
     /**
      * Check if a circle intersects an axis aligned rectangle.
      * @beta
@@ -220,5 +222,13 @@ export declare class Circle<CustomDataType = void> implements CircleGeometry, In
      * console.log(circle, rect, 'intersect?', intersect);
      * ```
      */
-    static intersectRect(x: number, y: number, r: number, minX: number, minY: number, maxX: number, maxY: number): boolean;
+    static intersectRect(
+        x: number,
+        y: number,
+        r: number,
+        minX: number,
+        minY: number,
+        maxX: number,
+        maxY: number
+    ): boolean
 }

@@ -1,14 +1,14 @@
-import type { Rectangle } from './Rectangle';
-import type { Circle } from './Circle';
-import type { Line } from './Line';
+import type { Rectangle } from './Rectangle'
+import type { Circle } from './Circle'
+import type { Line } from './Line'
 
 //export type Quadrant = 0|1|2|3;
-export type Quadrant = number; // smh
+export type Quadrant = number // smh
 export const enum QUAD {
-  NE = 0,
-  NW = 1,
-  SW = 2,
-  SE = 3
+    NE = 0,
+    NW = 1,
+    SW = 2,
+    SE = 3,
 }
 
 /**
@@ -18,7 +18,7 @@ export interface Indexable {
     /**
      * Whether this object should be removed during a typical .clear call
      */
-    qtStatic?: boolean;
+    qtStatic?: boolean
     /**
      * This method is called on all objects that are inserted into or retrieved from the Quadtree.
      * It must determine which quadrant an object belongs to.
@@ -53,4 +53,4 @@ export interface NodeGeometry {
     height: number
 }
 
-export type ObjectsType = Rectangle|Circle|Line|Indexable
+export type ObjectsType = Rectangle | Circle | Line | Indexable

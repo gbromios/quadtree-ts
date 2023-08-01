@@ -1,13 +1,19 @@
 <!doctype html>
 <html>
-	<head>
-		<title>quadtree-ts Homepage</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="./examples/assets/examples.css" />
+    <head>
+        <title>quadtree-ts Homepage</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="./examples/assets/examples.css"
+        />
         <style>
-
             * {
                 margin: 0;
                 padding: 0;
@@ -23,7 +29,9 @@
                 min-height: 100vh;
             }
 
-            h1, h2, p {
+            h1,
+            h2,
+            p {
                 color: white;
             }
 
@@ -34,7 +42,7 @@
             h2 {
                 font-size: 0.875rem;
                 font-weight: normal;
-                color: rgba(255,255,255,0.5);
+                color: rgba(255, 255, 255, 0.5);
             }
 
             code,
@@ -51,15 +59,21 @@
                 cursor: pointer;
             }
 
-            .m1 { margin-bottom: 1rem; }
-            .m2 { margin-bottom: 2rem; }
-            .m4 { margin-bottom: 4rem; }
+            .m1 {
+                margin-bottom: 1rem;
+            }
+            .m2 {
+                margin-bottom: 2rem;
+            }
+            .m4 {
+                margin-bottom: 4rem;
+            }
 
             .content {
                 width: 100%;
                 max-width: 480px;
                 margin: auto;
-                background: rgba(0,0,0,0.4);
+                background: rgba(0, 0, 0, 0.4);
                 text-align: center;
                 padding: 1rem;
                 position: relative;
@@ -109,36 +123,41 @@
             .controls label {
                 display: inline-block;
                 border-radius: 0.125rem;
-                background: rgba(32,32,32,0.8);
+                background: rgba(32, 32, 32, 0.8);
                 padding: 0.25rem 0.5rem;
                 transition: background-color 0.4s;
                 cursor: pointer;
             }
             .controls label:hover {
-                background-color: rgba(64,64,64,0.9);
+                background-color: rgba(64, 64, 64, 0.9);
             }
             .controls input:checked + label {
                 color: black;
                 background-color: aquamarine;
             }
-
         </style>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-	</head>
-	<body>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
         <div class="content">
-
             <h1>quadtree-ts</h1>
             <h2 class="m1">2.0.0-beta.1</h2>
             <p class="m4" style="font-weight: 0.875rem">
-                A library for 2D spatial partitioning. 
+                A library for 2D spatial partitioning.
             </p>
 
             <nav class="m4">
                 <ul class="links">
-                    <li><a class="link" href="https://github.com/timohausmann/quadtree-ts#readme">Readme</a></li>
-                    <li><a class="link" href="./examples/simple">Examples</a></li>
+                    <li>
+                        <a
+                            class="link"
+                            href="https://github.com/timohausmann/quadtree-ts#readme"
+                            >Readme</a
+                        >
+                    </li>
+                    <li>
+                        <a class="link" href="./examples/simple">Examples</a>
+                    </li>
                     <li><a class="link" href="./documentation">API Docs</a></li>
                 </ul>
             </nav>
@@ -166,24 +185,48 @@
             <footer class="m4">
                 <nav>
                     <ul class="links">
-                        <li><a href="https://github.com/timohausmann/quadtree-ts" 
-                            title="quadtree-ts at GitHub"
-                            class="icon"
-                            target="_blank" rel="noopener noreferrer">
-                            <img src="./examples//assets/logo-github.svg" alt="GitHub Logo" />
-                        </a></li>
-                        <li><a href="https://www.npmjs.com/package/@timohausmann/quadtree-ts" 
-                            title="quadtree-ts at npm"
-                            class="icon"
-                            target="_blank" rel="noopener noreferrer">
-                            <img src="./examples//assets/logo-npm.svg" alt="npm Logo" />
-                        </a></li>
-                        <li><a href="https://twitter.com/timohausmann" 
-                            title="quadtree-ts author at Twitter"
-                            class="icon"
-                            target="_blank" rel="noopener noreferrer">
-                            <img src="./examples//assets/logo-twitter.svg" alt="Twitter Logo" />
-                        </a></li>
+                        <li>
+                            <a
+                                href="https://github.com/timohausmann/quadtree-ts"
+                                title="quadtree-ts at GitHub"
+                                class="icon"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src="./examples//assets/logo-github.svg"
+                                    alt="GitHub Logo"
+                                />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://www.npmjs.com/package/@timohausmann/quadtree-ts"
+                                title="quadtree-ts at npm"
+                                class="icon"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src="./examples//assets/logo-npm.svg"
+                                    alt="npm Logo"
+                                />
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://twitter.com/timohausmann"
+                                title="quadtree-ts author at Twitter"
+                                class="icon"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img
+                                    src="./examples//assets/logo-twitter.svg"
+                                    alt="Twitter Logo"
+                                />
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </footer>
@@ -191,31 +234,84 @@
             <section>
                 <div class="controls m2">
                     <strong>Quadtree enabled:</strong>
-                    <input type="radio" id="toggle-quadtree-on" name="toggle-quadtree" value="1" checked />
+                    <input
+                        type="radio"
+                        id="toggle-quadtree-on"
+                        name="toggle-quadtree"
+                        value="1"
+                        checked
+                    />
                     <label for="toggle-quadtree-on">On</label>
-                    <input type="radio" id="toggle-quadtree-off" name="toggle-quadtree" value="0" />
+                    <input
+                        type="radio"
+                        id="toggle-quadtree-off"
+                        name="toggle-quadtree"
+                        value="0"
+                    />
                     <label for="toggle-quadtree-off">Off</label>
                 </div>
                 <div class="controls m2">
                     <strong>Cursor:</strong>
-                    <input type="radio" id="cursor-rectangle" name="cursor" value="rectangle" checked />
+                    <input
+                        type="radio"
+                        id="cursor-rectangle"
+                        name="cursor"
+                        value="rectangle"
+                        checked
+                    />
                     <label for="cursor-rectangle">Rectangle</label>
-                    <input type="radio" id="cursor-circle" name="cursor" value="circle" />
+                    <input
+                        type="radio"
+                        id="cursor-circle"
+                        name="cursor"
+                        value="circle"
+                    />
                     <label for="cursor-circle">Circle</label>
-                    <input type="radio" id="cursor-line" name="cursor" value="line" />
+                    <input
+                        type="radio"
+                        id="cursor-line"
+                        name="cursor"
+                        value="line"
+                    />
                     <label for="cursor-line">Line</label>
                 </div>
                 <div class="controls m2">
                     <strong>Particle Amount:</strong>
-                    <input type="radio" id="particles-128" name="particles" value="128" checked />
+                    <input
+                        type="radio"
+                        id="particles-128"
+                        name="particles"
+                        value="128"
+                        checked
+                    />
                     <label for="particles-128">128</label>
-                    <input type="radio" id="particles-256" name="particles" value="256" />
+                    <input
+                        type="radio"
+                        id="particles-256"
+                        name="particles"
+                        value="256"
+                    />
                     <label for="particles-256">256</label>
-                    <input type="radio" id="particles-512" name="particles" value="512" />
+                    <input
+                        type="radio"
+                        id="particles-512"
+                        name="particles"
+                        value="512"
+                    />
                     <label for="particles-512">512</label>
-                    <input type="radio" id="particles-1024" name="particles" value="1024" />
+                    <input
+                        type="radio"
+                        id="particles-1024"
+                        name="particles"
+                        value="1024"
+                    />
                     <label for="particles-1024">1024</label>
-                    <input type="radio" id="particles-2048" name="particles" value="2048" />
+                    <input
+                        type="radio"
+                        id="particles-2048"
+                        name="particles"
+                        value="2048"
+                    />
                     <label for="particles-2048">2048</label>
                 </div>
             </section>
@@ -228,5 +324,5 @@
         <script src="https://cdn.jsdelivr.net/npm/@timohausmann/quadtree-ts/dist/quadtree.umd.full.js"></script>
         <script src="./examples/assets/tabs.js"></script>
         <script src="./examples/home/script.js"></script>
-	</body>
+    </body>
 </html>

@@ -1,4 +1,4 @@
-import type { NodeGeometry, Indexable } from './types';
+import type { NodeGeometry, Indexable } from './types'
 /**
  * Rectangle Geometry
  * @beta
@@ -10,30 +10,31 @@ export interface RectangleGeometry {
     /**
      * X start of the rectangle (top left).
      */
-    x: number;
+    x: number
     /**
      * Y start of the rectangle (top left).
      */
-    y: number;
+    y: number
     /**
      * Width of the rectangle.
      */
-    width: number;
+    width: number
     /**
      * Height of the rectangle.
      */
-    height: number;
+    height: number
 }
 /**
  * Rectangle Constructor Properties
  * @beta
  * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
  */
-export interface RectangleProps<CustomDataType = void> extends RectangleGeometry {
+export interface RectangleProps<CustomDataType = void>
+    extends RectangleGeometry {
     /**
      * Custom data
      */
-    data?: CustomDataType;
+    data?: CustomDataType
 }
 /**
  * Class representing a Rectangle
@@ -174,32 +175,34 @@ export interface RectangleProps<CustomDataType = void> extends RectangleGeometry
  * });
  * ```
  */
-export declare class Rectangle<CustomDataType = void> implements RectangleGeometry, Indexable {
+export declare class Rectangle<CustomDataType = void>
+    implements RectangleGeometry, Indexable
+{
     /**
      * X start of the rectangle (top left).
      */
-    x: number;
+    x: number
     /**
      * Y start of the rectangle (top left).
      */
-    y: number;
+    y: number
     /**
      * Width of the rectangle.
      */
-    width: number;
+    width: number
     /**
      * Height of the rectangle.
      */
-    height: number;
+    height: number
     /**
      * Custom data.
      */
-    data?: CustomDataType;
-    constructor(props: RectangleProps<CustomDataType>);
+    data?: CustomDataType
+    constructor(props: RectangleProps<CustomDataType>)
     /**
      * Determine which quadrant this rectangle belongs to.
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node: NodeGeometry): number[];
+    qtIndex(node: NodeGeometry): number[]
 }

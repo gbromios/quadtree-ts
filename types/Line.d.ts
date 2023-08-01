@@ -1,4 +1,4 @@
-import type { NodeGeometry, Indexable } from './types';
+import type { NodeGeometry, Indexable } from './types'
 /**
  * Line Geometry
  * @beta
@@ -10,19 +10,19 @@ export interface LineGeometry {
     /**
      * X start of the line.
      */
-    x1: number;
+    x1: number
     /**
      * Y start of the line.
      */
-    y1: number;
+    y1: number
     /**
      * X end of the line.
      */
-    x2: number;
+    x2: number
     /**
      * Y end of the line.
      */
-    y2: number;
+    y2: number
 }
 /**
  * Line Constructor Properties
@@ -33,7 +33,7 @@ export interface LineProps<CustomDataType = void> extends LineGeometry {
     /**
      * Custom data
      */
-    data?: CustomDataType;
+    data?: CustomDataType
 }
 /**
  * Class representing a Line
@@ -174,40 +174,42 @@ export interface LineProps<CustomDataType = void> extends LineGeometry {
  * });
  * ```
  */
-export declare class Line<CustomDataType = void> implements LineGeometry, Indexable {
+export declare class Line<CustomDataType = void>
+    implements LineGeometry, Indexable
+{
     /**
      * X start of the line.
      */
-    x1: number;
+    x1: number
     /**
      * Y start of the line.
      */
-    y1: number;
+    y1: number
     /**
      * X end of the line.
      */
-    x2: number;
+    x2: number
     /**
      * Y end of the line.
      */
-    y2: number;
+    y2: number
     /**
      * Custom data.
      */
-    data?: CustomDataType;
+    data?: CustomDataType
     /**
      * Line Constructor
      * @param props - Line properties
      * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
      */
-    constructor(props: LineProps<CustomDataType>);
+    constructor(props: LineProps<CustomDataType>)
     /**
      * Determine which quadrant this line belongs to.
      * @beta
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node: NodeGeometry): number[];
+    qtIndex(node: NodeGeometry): number[]
     /**
      * check if a line segment (the first 4 parameters) intersects an axis aligned rectangle (the last 4 parameters)
      * @beta
@@ -227,5 +229,14 @@ export declare class Line<CustomDataType = void> implements LineGeometry, Indexa
      * @param maxY - rectangle end Y
      * @returns true if the line segment intersects the axis aligned rectangle
      */
-    static intersectRect(x1: number, y1: number, x2: number, y2: number, minX: number, minY: number, maxX: number, maxY: number): boolean;
+    static intersectRect(
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
+        minX: number,
+        minY: number,
+        maxX: number,
+        maxY: number
+    ): boolean
 }
