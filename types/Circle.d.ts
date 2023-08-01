@@ -1,4 +1,7 @@
-import type { NodeGeometry, Indexable } from './types'
+import { vec2 } from 'gl-matrix';
+import { NodeGeometry } from './NodeGeometry';
+import { RectangleGeometry } from './Rectangle';
+import { Indexable, Quadrant } from './types';
 /**
  * Circle Geometry
  * @beta
@@ -10,26 +13,31 @@ export interface CircleGeometry {
     /**
      * X center of the circle.
      */
-    x: number
+    x: number;
     /**
      * Y center of the circle.
      */
-    y: number
+    y: number;
     /**
      * Radius of the circle.
      */
-    r: number
+    r: number;
+    readonly center: vec2;
 }
 /**
  * Circle Constructor Properties
  * @beta
  * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
  */
-export interface CircleProps<CustomDataType = void> extends CircleGeometry {
+export interface CircleProps<CustomDataType = void> extends Omit<CircleGeometry, 'center'> {
+    /**
+     * Whether this circle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
     /**
      * Custom data
      */
-    data?: CustomDataType
+    data?: CustomDataType;
 }
 /**
  * Class representing a Circle.
@@ -162,37 +170,39 @@ export interface CircleProps<CustomDataType = void> extends CircleGeometry {
  * });
  * ```
  */
-export declare class Circle<CustomDataType = void>
-    implements CircleGeometry, Indexable
-{
-    /**
-     * X center of the circle.
-     */
-    x: number
-    /**
-     * Y center of the circle.
-     */
-    y: number
+export declare class Circle<CustomDataType = void> implements CircleGeometry, Indexable {
+    readonly center: vec2;
     /**
      * Radius of the circle.
      */
-    r: number
+    r: number;
+    /**
+     * Whether this circle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
     /**
      * Custom data.
      */
-    data?: CustomDataType
+    data?: CustomDataType;
     /**
      * Circle Constructor
      * @param props - Circle properties
      * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
      */
-    constructor(props: CircleProps<CustomDataType>)
+    constructor(props: CircleProps<CustomDataType>);
+    get x(): number;
+    set x(x: number);
+    /**
+     * Y start of the rectangle (top left).
+     */
+    get y(): number;
+    set y(y: number);
     /**
      * Determine which quadrant this circle belongs to.
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node: NodeGeometry): number[]
+    qtIndex(node: NodeGeometry): Generator<Quadrant>;
     /**
      * Check if a circle intersects an axis aligned rectangle.
      * @beta
@@ -222,13 +232,7 @@ export declare class Circle<CustomDataType = void>
      * console.log(circle, rect, 'intersect?', intersect);
      * ```
      */
-    static intersectRect(
-        x: number,
-        y: number,
-        r: number,
-        minX: number,
-        minY: number,
-        maxX: number,
-        maxY: number
-    ): boolean
+    static intersectRect(x: number, y: number, r: number, minX: number, minY: number, maxX: number, maxY: number): boolean;
+    intersectRect(rectangle: RectangleGeometry): boolean;
+    intersectRect(position: vec2, size: vec2): boolean;
 }

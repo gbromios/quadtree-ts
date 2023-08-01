@@ -1,4 +1,7 @@
-import type { NodeGeometry, Indexable } from './types'
+import { vec2 } from 'gl-matrix';
+import { NodeGeometry } from './NodeGeometry';
+import type { RectangleGeometry } from './Rectangle';
+import { Indexable, Quadrant } from './types';
 /**
  * Line Geometry
  * @beta
@@ -10,19 +13,19 @@ export interface LineGeometry {
     /**
      * X start of the line.
      */
-    x1: number
+    x1: number;
     /**
      * Y start of the line.
      */
-    y1: number
+    y1: number;
     /**
      * X end of the line.
      */
-    x2: number
+    x2: number;
     /**
      * Y end of the line.
      */
-    y2: number
+    y2: number;
 }
 /**
  * Line Constructor Properties
@@ -31,9 +34,13 @@ export interface LineGeometry {
  */
 export interface LineProps<CustomDataType = void> extends LineGeometry {
     /**
+     * Whether this circle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
+    /**
      * Custom data
      */
-    data?: CustomDataType
+    data?: CustomDataType;
 }
 /**
  * Class representing a Line
@@ -174,42 +181,61 @@ export interface LineProps<CustomDataType = void> extends LineGeometry {
  * });
  * ```
  */
-export declare class Line<CustomDataType = void>
-    implements LineGeometry, Indexable
-{
+export declare class Line<CustomDataType = void> implements LineGeometry, Indexable {
     /**
-     * X start of the line.
+     * Whether this circle should be removed during a typical .clear call
      */
-    x1: number
-    /**
-     * Y start of the line.
-     */
-    y1: number
-    /**
-     * X end of the line.
-     */
-    x2: number
-    /**
-     * Y end of the line.
-     */
-    y2: number
+    qtStatic?: boolean;
     /**
      * Custom data.
      */
-    data?: CustomDataType
+    data?: CustomDataType;
+    /**
+     * x,y vector for the start of the line
+     */
+    readonly a: vec2;
+    /**
+     * x,y vector for the end of the line
+     */
+    readonly b: vec2;
+    private readonly buffer;
     /**
      * Line Constructor
      * @param props - Line properties
      * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
      */
-    constructor(props: LineProps<CustomDataType>)
+    constructor(props: LineProps<CustomDataType>);
+    toString(): string;
+    /**
+     * X start of the line.
+     */
+    get x1(): number;
+    set x1(x1: number);
+    /**
+     * Y start of the line.
+     */
+    get y1(): number;
+    set y1(y1: number);
+    /**
+     * X end of the line.
+     */
+    get x2(): number;
+    set x2(x2: number);
+    /**
+     * Y end of the line.
+     */
+    get y2(): number;
+    set y2(y2: number);
     /**
      * Determine which quadrant this line belongs to.
      * @beta
      * @param node - Quadtree node to be checked
-     * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
+     * @returns Generator of colliding quad indices
      */
-    qtIndex(node: NodeGeometry): number[]
+    qtIndex(node: NodeGeometry): Generator<Quadrant>;
+    intersectRect(rectangle: RectangleGeometry): boolean;
+    intersectRect(position: vec2, size: vec2): boolean;
+    [Symbol.iterator](): Generator<number>;
     /**
      * check if a line segment (the first 4 parameters) intersects an axis aligned rectangle (the last 4 parameters)
      * @beta
@@ -229,14 +255,5 @@ export declare class Line<CustomDataType = void>
      * @param maxY - rectangle end Y
      * @returns true if the line segment intersects the axis aligned rectangle
      */
-    static intersectRect(
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        minX: number,
-        minY: number,
-        maxX: number,
-        maxY: number
-    ): boolean
+    static intersectRect(x1: number, y1: number, x2: number, y2: number, minX: number, minY: number, maxX: number, maxY: number): boolean;
 }

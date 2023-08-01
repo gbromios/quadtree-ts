@@ -1,4 +1,6 @@
-import type { NodeGeometry, Indexable } from './types'
+import type { Indexable, Quadrant } from './types';
+import { vec2 } from 'gl-matrix';
+import { NodeGeometry } from './NodeGeometry';
 /**
  * Rectangle Geometry
  * @beta
@@ -10,31 +12,42 @@ export interface RectangleGeometry {
     /**
      * X start of the rectangle (top left).
      */
-    x: number
+    x: number;
     /**
      * Y start of the rectangle (top left).
      */
-    y: number
+    y: number;
     /**
      * Width of the rectangle.
      */
-    width: number
+    width: number;
     /**
      * Height of the rectangle.
      */
-    height: number
+    height: number;
+    /**
+     * X,Y position vector of the node
+     */
+    readonly position: vec2;
+    /**
+     * Width, Height size vector of the node
+     */
+    readonly size: vec2;
 }
 /**
  * Rectangle Constructor Properties
  * @beta
  * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
  */
-export interface RectangleProps<CustomDataType = void>
-    extends RectangleGeometry {
+export interface RectangleProps<CustomDataType = void> extends Omit<RectangleGeometry, 'position' | 'size'> {
+    /**
+     * Whether this rectangle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
     /**
      * Custom data
      */
-    data?: CustomDataType
+    data?: CustomDataType;
 }
 /**
  * Class representing a Rectangle
@@ -175,34 +188,49 @@ export interface RectangleProps<CustomDataType = void>
  * });
  * ```
  */
-export declare class Rectangle<CustomDataType = void>
-    implements RectangleGeometry, Indexable
-{
+export declare class Rectangle<CustomDataType = void> implements RectangleGeometry, Indexable {
     /**
-     * X start of the rectangle (top left).
+     * Whether this rectangle should be removed during a typical .clear call
      */
-    x: number
-    /**
-     * Y start of the rectangle (top left).
-     */
-    y: number
-    /**
-     * Width of the rectangle.
-     */
-    width: number
-    /**
-     * Height of the rectangle.
-     */
-    height: number
+    qtStatic: boolean;
     /**
      * Custom data.
      */
-    data?: CustomDataType
-    constructor(props: RectangleProps<CustomDataType>)
+    data?: CustomDataType;
+    /**
+     * X,Y position vector of the node
+     */
+    readonly position: vec2;
+    /**
+     * Width, Height size vector of the node
+     */
+    readonly size: vec2;
+    private readonly buffer;
+    constructor(props: RectangleProps<CustomDataType>);
+    /**
+     * X start of the rectangle (top left).
+     */
+    get x(): number;
+    set x(x: number);
+    /**
+     * Y start of the rectangle (top left).
+     */
+    get y(): number;
+    set y(y: number);
+    /**
+     * Width of the rectangle.
+     */
+    get width(): number;
+    set width(width: number);
+    /**
+     * Height of the rectangle.
+     */
+    get height(): number;
+    set height(height: number);
     /**
      * Determine which quadrant this rectangle belongs to.
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node: NodeGeometry): number[]
+    qtIndex(node: NodeGeometry): Generator<Quadrant>;
 }
