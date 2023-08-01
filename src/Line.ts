@@ -36,6 +36,10 @@ export interface LineGeometry {
  * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
  */
 export interface LineProps<CustomDataType = void> extends LineGeometry {
+    /**
+     * Whether this circle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
 
     /**
      * Custom data
@@ -205,6 +209,11 @@ export class Line<CustomDataType = void> implements LineGeometry, Indexable {
     y2: number;
 
     /**
+     * Whether this circle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
+
+    /**
      * Custom data.
      */
     data?: CustomDataType;
@@ -220,6 +229,7 @@ export class Line<CustomDataType = void> implements LineGeometry, Indexable {
         this.y1 = props.y1;
         this.x2 = props.x2;
         this.y2 = props.y2;
+        this.qtStatic = props.qtStatic;
         this.data = props.data;
     }
     

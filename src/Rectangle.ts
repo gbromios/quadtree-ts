@@ -1,9 +1,10 @@
-import type { NodeGeometry, Indexable } from './types';
+import type { NodeGeometry, Indexable, Quadrant } from './types';
+import { QUAD } from './types';
 
 /**
  * Rectangle Geometry
  * @beta
- * 
+ *
  * @remarks
  * This interface simply represents a rectangle geometry.
  */
@@ -36,6 +37,12 @@ export interface RectangleGeometry {
  * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
  */
 export interface RectangleProps<CustomDataType = void> extends RectangleGeometry {
+
+    /**
+     * Whether this rectangle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
+
 
     /**
      * Custom data
@@ -205,27 +212,33 @@ export class Rectangle<CustomDataType = void> implements RectangleGeometry, Inde
     height: number;
 
     /**
+     * Whether this rectangle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
+
+    /**
      * Custom data.
      */
     data?: CustomDataType;
 
     constructor(props:RectangleProps<CustomDataType>) {
-        
+
         this.x = props.x;
         this.y = props.y;
         this.width = props.width;
         this.height = props.height;
+        this.qtStatic = props.qtStatic;
         this.data = props.data;
     }
-    
+
     /**
      * Determine which quadrant this rectangle belongs to.
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node:NodeGeometry): number[] {
-        
-        const indexes:number[] = [],
+    qtIndex(node:NodeGeometry): Quadrant[] {
+
+        const indexes:Quadrant[] = [],
             boundsCenterX   = node.x + (node.width/2),
             boundsCenterY   = node.y + (node.height/2);
 
@@ -236,24 +249,23 @@ export class Rectangle<CustomDataType = void> implements RectangleGeometry, Inde
 
         //top-right quad
         if(startIsNorth && endIsEast) {
-            indexes.push(0);
+            indexes.push(QUAD.NE);
         }
-        
+
         //top-left quad
         if(startIsWest && startIsNorth) {
-            indexes.push(1);
+            indexes.push(QUAD.NW);
         }
 
         //bottom-left quad
         if(startIsWest && endIsSouth) {
-            indexes.push(2);
+            indexes.push(QUAD.SW);
         }
 
         //bottom-right quad
         if(endIsEast && endIsSouth) {
-            indexes.push(3);
+            indexes.push(QUAD.SE);
         }
-     
         return indexes;
     }
 }

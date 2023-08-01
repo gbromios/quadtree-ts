@@ -26,10 +26,10 @@ describe('Quadtree.insert', () => {
         const rect = new Rectangle({ x: 0, y: 0, width: 100, height: 100 });
         tree.split();
         tree.insert(rect); 
-        expect(tree.nodes[0].objects).toEqual([rect]);
-        expect(tree.nodes[1].objects).toEqual([rect]);
-        expect(tree.nodes[2].objects).toEqual([rect]);
-        expect(tree.nodes[3].objects).toEqual([rect]);
+        expect(tree.nodes![0].objects).toEqual([rect]);
+        expect(tree.nodes![1].objects).toEqual([rect]);
+        expect(tree.nodes![2].objects).toEqual([rect]);
+        expect(tree.nodes![3].objects).toEqual([rect]);
     });
 
     test('calls insert recursively', () => {
@@ -37,16 +37,16 @@ describe('Quadtree.insert', () => {
         const rect = new Rectangle({ x: 0, y: 0, width: 100, height: 100 });
         tree.split();
 
-        jest.spyOn(tree.nodes[0], 'insert');
-        jest.spyOn(tree.nodes[1], 'insert');
-        jest.spyOn(tree.nodes[2], 'insert');
-        jest.spyOn(tree.nodes[3], 'insert');
+        jest.spyOn(tree.nodes![0], 'insert');
+        jest.spyOn(tree.nodes![1], 'insert');
+        jest.spyOn(tree.nodes![2], 'insert');
+        jest.spyOn(tree.nodes![3], 'insert');
 
         tree.insert(rect); 
-        expect(tree.nodes[0].insert).toHaveBeenCalledTimes(1);
-        expect(tree.nodes[1].insert).toHaveBeenCalledTimes(1);
-        expect(tree.nodes[2].insert).toHaveBeenCalledTimes(1);
-        expect(tree.nodes[3].insert).toHaveBeenCalledTimes(1);
+        expect(tree.nodes![0].insert).toHaveBeenCalledTimes(1);
+        expect(tree.nodes![1].insert).toHaveBeenCalledTimes(1);
+        expect(tree.nodes![2].insert).toHaveBeenCalledTimes(1);
+        expect(tree.nodes![3].insert).toHaveBeenCalledTimes(1);
     });
 
     test('calls split when maxObjects has been reached', () => {

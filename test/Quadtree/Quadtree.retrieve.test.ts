@@ -27,16 +27,16 @@ describe('Quadtree.retrieve', () => {
         const tree = new Quadtree({ width: 100, height: 100 });
         const retrieve = new Rectangle({ x: 0, y: 0, width: 100, height: 100 });
         tree.split();
-        jest.spyOn(tree.nodes[0], 'retrieve');
-        jest.spyOn(tree.nodes[1], 'retrieve');
-        jest.spyOn(tree.nodes[2], 'retrieve');
-        jest.spyOn(tree.nodes[3], 'retrieve');
+        jest.spyOn(tree.nodes![0], 'retrieve');
+        jest.spyOn(tree.nodes![1], 'retrieve');
+        jest.spyOn(tree.nodes![2], 'retrieve');
+        jest.spyOn(tree.nodes![3], 'retrieve');
 
         tree.retrieve(retrieve);
-        expect(tree.nodes[0].retrieve).toHaveBeenCalledTimes(1);
-        expect(tree.nodes[1].retrieve).toHaveBeenCalledTimes(1);
-        expect(tree.nodes[2].retrieve).toHaveBeenCalledTimes(1);
-        expect(tree.nodes[3].retrieve).toHaveBeenCalledTimes(1);
+        expect(tree.nodes?.[0].retrieve).toHaveBeenCalledTimes(1);
+        expect(tree.nodes?.[1].retrieve).toHaveBeenCalledTimes(1);
+        expect(tree.nodes?.[2].retrieve).toHaveBeenCalledTimes(1);
+        expect(tree.nodes?.[3].retrieve).toHaveBeenCalledTimes(1);
     });
 
     test('retrieves without duplicates', () => {
@@ -45,6 +45,6 @@ describe('Quadtree.retrieve', () => {
         tree.split();
         tree.insert(rect);
         const result = tree.retrieve(rect);
-        expect(result).toHaveLength(1);        
+        expect(result).toHaveLength(1);
     });
 });

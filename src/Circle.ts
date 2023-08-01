@@ -1,4 +1,4 @@
-import type { NodeGeometry, Indexable } from './types';
+import type { NodeGeometry, Indexable, Quadrant } from './types';
 
 /**
  * Circle Geometry
@@ -31,6 +31,10 @@ export interface CircleGeometry {
  * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
  */
 export interface CircleProps<CustomDataType = void> extends CircleGeometry {
+    /**
+     * Whether this circle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
 
     /**
      * Custom data
@@ -187,6 +191,11 @@ export class Circle<CustomDataType = void> implements CircleGeometry, Indexable 
     r: number;
 
     /**
+     * Whether this circle should be removed during a typical .clear call
+     */
+    qtStatic?: boolean;
+
+    /**
      * Custom data.
      */
     data?: CustomDataType;
@@ -197,10 +206,10 @@ export class Circle<CustomDataType = void> implements CircleGeometry, Indexable 
      * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
      */
     constructor(props:CircleProps<CustomDataType>) {
-
         this.x = props.x;
         this.y = props.y;
         this.r = props.r;
+        this.qtStatic = props.qtStatic;
         this.data = props.data;
     }
     
@@ -209,9 +218,9 @@ export class Circle<CustomDataType = void> implements CircleGeometry, Indexable 
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node:NodeGeometry): number[] {
+    qtIndex(node:NodeGeometry): Quadrant[] {
 
-        const indexes:number[] = [],
+        const indexes:Quadrant[] = [],
             w2 = node.width/2,
             h2 = node.height/2,
             x2 = node.x + w2,
@@ -227,11 +236,17 @@ export class Circle<CustomDataType = void> implements CircleGeometry, Indexable 
 
         //test all nodes for circle intersections
         for(let i=0; i<nodes.length; i++) {
-            if(Circle.intersectRect(this.x, this.y, this.r, nodes[i][0], nodes[i][1], nodes[i][0] + w2, nodes[i][1] + h2)) {
+            if(
+                Circle.intersectRect(
+                    this.x, this.y,
+                    this.r,
+                    nodes[i][0], nodes[i][1],
+                    nodes[i][0] + w2, nodes[i][1] + h2
+                )
+            ) {
                 indexes.push(i);
             }
         }
-     
         return indexes;
     }
 

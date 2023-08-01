@@ -20,5 +20,11 @@ describe('Quadtree.constructor', () => {
         expect(tree.maxObjects).toBe(5);
         expect(tree.maxLevels).toBe(3);
     });
+
+    test('enforces minimal maxObjects', () => {
+        expect(
+          () => { new Quadtree({ width: 100, height: 100, maxObjects: 0 })}
+        ).toThrow();
+    });
 });
 

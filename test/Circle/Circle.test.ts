@@ -25,7 +25,7 @@ describe('Circle additional use cases', () => {
     test('Circle.prototype.qtIndex can be referenced', () => {
         const tree = new Quadtree({ width: 100, height: 100, maxObjects: 1 });
         const circle1 = {
-            x: 25, 
+            x: 25,
             y: 25,
             r: 5,
             qtIndex: Circle.prototype.qtIndex,
