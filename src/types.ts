@@ -1,4 +1,4 @@
-import { NodeGeometry } from './NodeGeometry';
+import { NodeGeometry } from './NodeGeometry'
 import type { Rectangle } from './Rectangle'
 import type { Circle } from './Circle'
 import type { Line } from './Line'
@@ -26,7 +26,7 @@ export interface Indexable {
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    qtIndex(node: NodeGeometry): Iterable<Quadrant>;
+    qtIndex(node: NodeGeometry): Iterable<Quadrant>
 }
 
 export type ObjectsType = Rectangle | Circle | Line | Indexable

@@ -2,7 +2,7 @@ import type { Indexable, ObjectsType, Quadrant } from './types'
 import type { Rectangle } from './Rectangle'
 import type { Circle } from './Circle'
 import type { Line } from './Line'
-import { NodeGeometry } from './NodeGeometry';
+import { NodeGeometry } from './NodeGeometry'
 import { Subtree } from './Subtree'
 
 const DEFAULT_MAX_OBJECTS = 10
@@ -131,7 +131,7 @@ export class Quadtree<T extends ObjectsType> {
      */
 
     constructor(props: QuadtreeProps, level = 0) {
-        this.bounds = NodeGeometry(props);
+        this.bounds = NodeGeometry(props)
         this.maxObjects = props.maxObjects ?? DEFAULT_MAX_OBJECTS
         if (this.maxObjects < 1) throw new Error('maxObjects must be > 0')
         this.minObjects = props.minObjects ?? Math.floor(this.maxObjects / 2)
@@ -384,7 +384,7 @@ export class Quadtree<T extends ObjectsType> {
                     if (predicate(o)) yield o
                 }
             } else {
-              for (const o of this.objects) yield o;
+                for (const o of this.objects) yield o
             }
         } else if (this.nodes) {
             if (!predicate || dedupe) predicate = this._makePredicate(predicate)

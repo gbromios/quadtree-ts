@@ -1,6 +1,6 @@
-import { vec2 } from 'gl-matrix';
-import { NodeGeometry } from './NodeGeometry';
-import { RectangleGeometry } from './Rectangle';
+import { vec2 } from 'gl-matrix'
+import { NodeGeometry } from './NodeGeometry'
+import { RectangleGeometry } from './Rectangle'
 import { Indexable, QUAD, Quadrant } from './types'
 
 /**
@@ -26,7 +26,7 @@ export interface CircleGeometry {
      */
     r: number
 
-    readonly center: vec2;
+    readonly center: vec2
 }
 
 /**
@@ -34,7 +34,8 @@ export interface CircleGeometry {
  * @beta
  * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
  */
-export interface CircleProps<CustomDataType = void> extends Omit<CircleGeometry, 'center'> {
+export interface CircleProps<CustomDataType = void>
+    extends Omit<CircleGeometry, 'center'> {
     /**
      * Whether this circle should be removed during a typical .clear call
      */
@@ -180,7 +181,7 @@ export interface CircleProps<CustomDataType = void> extends Omit<CircleGeometry,
 export class Circle<CustomDataType = void>
     implements CircleGeometry, Indexable
 {
-    readonly center: vec2;
+    readonly center: vec2
 
     /**
      * Radius of the circle.
@@ -203,41 +204,47 @@ export class Circle<CustomDataType = void>
      * @typeParam CustomDataType - Type of the custom data property (optional, inferred automatically).
      */
     constructor(props: CircleProps<CustomDataType>) {
-        this.center = vec2.fromValues(props.x, props.y);
+        this.center = vec2.fromValues(props.x, props.y)
         this.r = props.r
         this.qtStatic = props.qtStatic
         this.data = props.data
     }
 
-    get x (): number { return this.center[0]; }
-    set x (x: number) { this.center[0] = x; }
+    get x(): number {
+        return this.center[0]
+    }
+    set x(x: number) {
+        this.center[0] = x
+    }
 
     /**
      * Y start of the rectangle (top left).
      */
-    get y (): number { return this.center[1]; }
-    set y (y: number) { this.center[1] = y; }
-
-
+    get y(): number {
+        return this.center[1]
+    }
+    set y(y: number) {
+        this.center[1] = y
+    }
 
     /**
      * Determine which quadrant this circle belongs to.
      * @param node - Quadtree node to be checked
      * @returns Array containing indexes of intersecting subnodes (0-3 = top-right, top-left, bottom-left, bottom-right)
      */
-    * qtIndex(node: NodeGeometry): Generator<Quadrant> {
-        const sub = NodeGeometry(node.position, node.size);
-        vec2.scale(sub.size, sub.size, 0.5);
-        if (this.intersectRect(sub)) yield QUAD.NW;
+    *qtIndex(node: NodeGeometry): Generator<Quadrant> {
+        const sub = NodeGeometry(node.position, node.size)
+        vec2.scale(sub.size, sub.size, 0.5)
+        if (this.intersectRect(sub)) yield QUAD.NW
 
-        sub.position[0] += sub.size[0];
-        if (this.intersectRect(sub)) yield QUAD.NE;
+        sub.position[0] += sub.size[0]
+        if (this.intersectRect(sub)) yield QUAD.NE
 
-        sub.position[1] += sub.size[1];
-        if (this.intersectRect(sub)) yield QUAD.SE;
+        sub.position[1] += sub.size[1]
+        if (this.intersectRect(sub)) yield QUAD.SE
 
-        sub.position[0] -= sub.size[0];
-        if (this.intersectRect(sub)) yield QUAD.SW;
+        sub.position[0] -= sub.size[0]
+        if (this.intersectRect(sub)) yield QUAD.SW
     }
 
     /**
@@ -283,21 +290,19 @@ export class Circle<CustomDataType = void>
         return dx * dx + dy * dy < r * r
     }
 
-    intersectRect (rectangle: RectangleGeometry): boolean;
-    intersectRect (position: vec2, size: vec2): boolean;
-    intersectRect (pr: RectangleGeometry|vec2, s?: vec2) {
-      // seems shady but... the signature saves us
-      if (!s) ({ position: pr, size: s } = pr as RectangleGeometry);
-      return Circle.intersectRect(
-        this.center[0],
-        this.center[1],
-        this.r,
-        (pr as vec2)[0],
-        (pr as vec2)[1],
-        (pr as vec2)[0] + s[0],
-        (pr as vec2)[1] + s[1],
-      );
+    intersectRect(rectangle: RectangleGeometry): boolean
+    intersectRect(position: vec2, size: vec2): boolean
+    intersectRect(pr: RectangleGeometry | vec2, s?: vec2) {
+        // seems shady but... the signature saves us
+        if (!s) ({ position: pr, size: s } = pr as RectangleGeometry)
+        return Circle.intersectRect(
+            this.center[0],
+            this.center[1],
+            this.r,
+            (pr as vec2)[0],
+            (pr as vec2)[1],
+            (pr as vec2)[0] + s[0],
+            (pr as vec2)[1] + s[1]
+        )
     }
-
- 
 }

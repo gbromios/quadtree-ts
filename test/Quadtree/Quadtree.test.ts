@@ -4,7 +4,12 @@ describe('Quadtree.constructor', () => {
     test('applies minimal arguments and defaults', () => {
         const tree = new Quadtree({ width: 100, height: 200 })
 
-        expect(tree.bounds).toMatchObject({ x: 0, y: 0, width: 100, height: 200 })
+        expect(tree.bounds).toMatchObject({
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 200,
+        })
         expect(tree.maxObjects).toBe(10)
         expect(tree.maxLevels).toBe(4)
         expect(tree.level).toBe(0)
@@ -20,7 +25,12 @@ describe('Quadtree.constructor', () => {
             maxLevels: 3,
         })
 
-        expect(tree.bounds).toMatchObject({ x: 20, y: 40, width: 100, height: 200 })
+        expect(tree.bounds).toMatchObject({
+            x: 20,
+            y: 40,
+            width: 100,
+            height: 200,
+        })
         expect(tree.maxObjects).toBe(5)
         expect(tree.maxLevels).toBe(3)
     })
